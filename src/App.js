@@ -1,23 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import './assets/css/animate.css'
+import './assets/css/owl.carousel.css'
+import './assets/css/owl.theme.css'
+import './assets/css/bootstrap.min.css'
+import './assets/css/hover-min.css'
+import './assets/css/flag-icon.min.css'
+import './assets/css/style.css'
+import './assets/css/colors/main.css'
+import './assets/css/elegant_icon.css'
+import './assets/css/fontawesome-all.min.css'
+import HomeComponent from './components/HomeComponent'
+import CategorySection from './components/CategorySection'
+import RecipeOverview from './components/RecipeOverview'
+
+
+
+
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+     <HomeComponent/>
+     <CategorySection/>
+     <RecipeOverview/>
     </div>
   );
 }
