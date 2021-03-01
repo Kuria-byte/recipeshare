@@ -1,3 +1,9 @@
+import { Switch, Route } from "react-router-dom";
+import SignIn from "./pages/SignIn";
+import HomePage from "./pages/HomePage";
+
+
+// Libraries and styling
 import './assets/css/animate.css'
 import './assets/css/owl.carousel.css'
 import './assets/css/owl.theme.css'
@@ -8,9 +14,10 @@ import './assets/css/style.css'
 import './assets/css/colors/main.css'
 import './assets/css/elegant_icon.css'
 import './assets/css/fontawesome-all.min.css'
-import HomeComponent from './components/HomeComponent'
-import CategorySection from './components/CategorySection'
-import RecipeOverview from './components/RecipeOverview'
+import AddRecipe from "./pages/AddRecipe";
+
+
+
 
 
 
@@ -19,9 +26,12 @@ import RecipeOverview from './components/RecipeOverview'
 function App() {
   return (
     <div className="App">
-     <HomeComponent/>
-     <CategorySection/>
-     <RecipeOverview/>
+     <Switch>
+     <Route exact path="/" component={HomePage} />
+     <Route exact path="/login" component={SignIn} />
+     <Route exact path="/addrecipe" component={AddRecipe} />
+  
+     </Switch>
     </div>
   );
 }
