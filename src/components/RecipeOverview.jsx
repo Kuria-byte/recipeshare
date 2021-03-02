@@ -31,8 +31,6 @@ const RecipeOverview = ({recipes, query}) => {
 						}
 
 
-
-
 				</div>
 
 				{/* <div class="text-center">

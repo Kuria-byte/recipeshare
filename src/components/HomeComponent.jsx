@@ -1,7 +1,9 @@
 import React from 'react'
-import  { useState } from 'react';
+import {connect} from 'react-redux'
 import Axios from 'axios'
 
+import { setSearchQuery } from '../Redux/Search/search.actions'
+import { setRecipe} from '../Redux/Recipes/recipe.actions'
 
 import bg from '../images/bg6.jpg'
 import Header from './Header'
@@ -10,13 +12,9 @@ import CategorySection from './CategorySection';
 
 
 
-const HomeComponent = () => {
+const HomeComponent = ({query, setQuery,recipes, setRecipe}) => {
 
 
-    const [query, setQuery] = useState("")
-	let [recipes, setRecipes] = useState([])
-	const [alert, setAlert] = useState("");
-  
 	const APP_ID = "6e821545"
 	const APP_KEY = "62416024663e954d8a87f8360e32e985"
 	const url = `https://api.edamam.com/search?q=${query}&app_id=${APP_ID}&app_key=${APP_KEY}`
@@ -25,23 +23,22 @@ const HomeComponent = () => {
 	  if (query !== "") {
 		const result = await Axios.get(url);
 		if (!result.data.more) {
-		  return setAlert("No food with such name");
+		  return console.log("No food with such name");
 		}
 		console.log(result);
-		setRecipes(result.data.hits);
-        setQuery("")
-		setAlert("");
+		setRecipe(result.data.hits)
+	
 	  } else {
-		setAlert("Please fill the form");
-		setAlert(alert)
+		console.log("Please fill the form");
+	
 	  }
 	};
 
 
   
 	const onChange = (e) => {
-	  setQuery(e.target.value)
-  
+	 setQuery(e.target.value)
+
 	}
   
 	const onSubmit = (e) => {
@@ -92,7 +89,7 @@ const HomeComponent = () => {
 
 	</div>
 	<CategorySection/>
-	{recipes === [] ? "":  <RecipeOverview recipes={recipes} query={query}/> }
+	{query === " " ? "":  <RecipeOverview recipes={recipes} query={query}/> }
 
 
 </div>
@@ -101,4 +98,14 @@ const HomeComponent = () => {
     )
 }
 
-export default HomeComponent
+const mapStateToProps =(state)=>({
+   query: state.query.query,
+   recipes: state.recipes.recipe
+})
+
+const mapDispatchToProps = dispatch =>({
+	setQuery : (query) => dispatch(setSearchQuery(query)),
+	setRecipe: (recipe) => dispatch(setRecipe(recipe))
+})
+
+export default connect (mapStateToProps,mapDispatchToProps) (HomeComponent)
