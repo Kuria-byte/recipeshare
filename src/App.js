@@ -1,4 +1,5 @@
 import { Switch, Route } from "react-router-dom";
+
 import SignIn from "./pages/SignIn";
 import HomePage from "./pages/HomePage";
 
@@ -20,10 +21,11 @@ import AddRecipe from "./pages/AddRecipe";
 
 
 
-
-
-
 function App() {
+
+
+
+
   return (
     <div className="App">
      <Switch>

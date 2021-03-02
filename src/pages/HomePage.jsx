@@ -1,15 +1,14 @@
 import React from 'react'
-import CategorySection from '../components/CategorySection'
-import Footer from '../components/Footer'
 import HomeComponent from '../components/HomeComponent'
-import RecipeOverview from '../components/RecipeOverview'
+import Footer from '../components/Footer'
+
+
 
 const HomePage = () => {
     return (
         <div>
         <HomeComponent/>
-        <CategorySection/>
-        <RecipeOverview/>
+  
         <Footer/>
       </div>
     )
