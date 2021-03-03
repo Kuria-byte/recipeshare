@@ -3,3 +3,9 @@ export const setRecipe = recipe =>({
     payload : recipe
 });
 
+export const addRecipeBookmark = (recipe) => ({
+    type :'ADD_RECIPE_BOOKMARK',
+    payload : recipe
+
+});
+

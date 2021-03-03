@@ -43,8 +43,31 @@ const CategorySection = () => {
 		if (recipes !== []) {
 			getData()
 		}
-
 	}
+	// const handleDish = (e) => {
+	// 	e.preventDefault();
+	// 	setQuery(e.target.id)
+	// 	if (recipes !== []) {
+	// 		getData()
+	// 	}
+	// }
+
+	// const handleMeal = (e) => {
+	// 	e.preventDefault();
+	// 	setQuery(e.target.id)
+	// 	if (recipes !== []) {
+	// 		getData()
+	// 	}
+	// }
+
+	// const handleCuisine = (e) => {
+	// 	e.preventDefault();
+	// 	setQuery(e.target.id)
+	// 	if (recipes !== []) {
+	// 		getData()
+	// 	}
+	// }
+
 
 
 
@@ -58,7 +81,7 @@ const CategorySection = () => {
 					<div class="col-xl-2 col-lg-3 col-md-4 col-6 sm-mb-25px">
 						<span class="d-block box-shadow background-main-color text-white hvr-float" >
 							<div class="thum"><img src={chicken} alt="" /></div>
-							<h4 id="chicken" class="text-center padding-15px" onClick={handleClick}  >Chicken</h4>
+							<h4 id="Breakfast" class="text-center padding-15px" onClick={handleClick} >Breakfast</h4>
 
 						</span>
 					</div>
@@ -66,19 +89,19 @@ const CategorySection = () => {
 					<div class="col-xl-2 col-lg-3 col-md-4 col-6 sm-mb-25px"  >
 						<span class="d-block box-shadow background-main-color text-white hvr-float">
 							<div class="thum"><img src={beef} alt="" /></div>
-							<h4 id="beef" class="text-center padding-15px" onClick={handleClick}>Beef</h4>
+							<h4 id="Lunch" class="text-center padding-15px" onClick={handleClick}>Lunch</h4>
 						</span>
 					</div>
 					<div class="col-xl-2 col-lg-3 col-md-4 col-6 sm-mb-25px" >
 						<span class="d-block box-shadow background-main-color text-white hvr-float">
 							<div class="thum"><img src={cocktail} alt="" /></div>
-							<h4 id="cocktail" class="text-center padding-15px" onClick={handleClick}>Cocktails</h4>
+							<h4 id="drinks" class="text-center padding-15px" onClick={handleClick}>Drinks</h4>
 						</span>
 					</div>
 					<div class="col-xl-2 col-lg-3 col-md-4 col-6 sm-mb-25px" >
 						<span class="d-block box-shadow background-main-color text-white hvr-float">
 							<div class="thum"><img src={salad} alt="" /></div>
-							<h4 id="salad" class="text-center padding-15px" onClick={handleClick}>Salads</h4>
+							<h4 id="Drinks" class="text-center padding-15px" onClick={handleClick}>Drinks</h4>
 						</span>
 					</div>
 					<div class="col-xl-2 col-lg-3 col-md-4 col-6 sm-mb-25px">

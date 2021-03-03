@@ -2,6 +2,7 @@ import { Switch, Route } from "react-router-dom";
 
 import SignIn from "./pages/SignIn";
 import HomePage from "./pages/HomePage";
+import Recipe from "./pages/Recipe"
 
 
 // Libraries and styling
@@ -32,7 +33,7 @@ function App() {
      <Route exact path="/" component={HomePage} />
      <Route exact path="/login" component={SignIn} />
      <Route exact path="/addrecipe" component={AddRecipe} />
-  
+     <Route exact path="/recipe" component={Recipe} />
      </Switch>
     </div>
   );

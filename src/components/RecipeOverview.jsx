@@ -15,7 +15,7 @@ const RecipeOverview = ({recipes, query}) => {
 		<section class="padding-tb-100px background-light-grey">
 			<div class="container">
 				<div class="title text-center">
-					<h2 class="font-weight-700 text-main-color">Latest recipes</h2>
+					<h2 class="font-weight-700 text-main-color">Latest {query} recipes</h2>
 					<div class="row justify-content-center margin-bottom-45px">
 						<div class="col-md-7">
 							<p class="text-grey-2">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
@@ -26,9 +26,14 @@ const RecipeOverview = ({recipes, query}) => {
 				<div class="row">
 
 					{recipes !== [] &&
-						recipes.map(recipe => <RecipeItem key={uuid()} recipe={recipe} /> )
+						recipes.map((recipe, bookmarked) => <RecipeItem key={uuid()} recipe={recipe} bookmarked={bookmarked} /> )
 					
 						}
+
+						
+
+
+				
 
 
 				</div>
