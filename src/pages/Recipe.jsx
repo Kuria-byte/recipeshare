@@ -1,6 +1,57 @@
 import React from 'react'
+import {connect} from 'react-redux'
+import Axios from 'axios'
+import { v4 as uuid } from 'uuid'
 
-const Recipe = () => {
+import { setRecipe} from '../Redux/Recipes/recipe.actions'
+
+const Recipe = ({match, recipes, setRecipe}) => {
+
+	//Getting params from url
+	let recipeParameters = window.location.pathname.substring(9);
+    console.log(match.params.id)
+
+  
+
+
+    
+	// Fetching Data depending on params
+	const APP_ID = "6e821545"
+	const APP_KEY = "62416024663e954d8a87f8360e32e985"
+	const Weburl = `https://api.edamam.com/search?q=${recipeParameters}&app_id=${APP_ID}&app_key=${APP_KEY}`
+  
+	const getData = async () => {
+	  if (recipeParameters !== "") {
+		const result = await Axios.get(Weburl);
+		if (!result.data.more) {
+		  return console.log("No food with such name");
+		}
+		setRecipe(result.data.hits)
+		recipeParameters = ""
+	  } else {
+		console.log("Please fill the form");
+	
+	  }
+	};
+
+	// useEffect(() => {
+	// 	getData();
+		
+	// 	console.log(recipes)
+	//   });
+
+	if ( recipeParameters !== ""){
+		getData();
+	}
+
+	  let fetchedRecipe ={};
+	  recipes.map((recipe) => fetchedRecipe = recipe )
+	  console.log(fetchedRecipe);
+	  const { label, image, source, calories, ingredients, url } = fetchedRecipe.recipe;
+	  let servings = fetchedRecipe.recipe.yield
+
+
+
     return (
         <div>
 
@@ -10,7 +61,7 @@ const Recipe = () => {
 				<li><a href="/">Home</a></li>
 				<li class="active">Recipe</li>
 			</ol>
-			<h1 class="font-weight-300">Slow Cooker Loaded Potato Soup</h1>
+			<h1 class="font-weight-300">{label}</h1>
 		</div>
 	</div>
 
@@ -20,9 +71,14 @@ const Recipe = () => {
 
 			<div class="col-lg-8">
 				<div class="margin-bottom-40px card border-0 box-shadow">
-					<div class="card-img-top"><a href="/"><img src="http://placehold.it/1600x800" alt=""/></a></div>
+					<div class="card-img-top"><a href="/">
+					<img style={{marginLeft: "auto", marginTop: "15px", marginRight:"auto", display:"block" }} src={image} alt={label}/></a>
+					</div>
 					<div class="padding-lr-30px padding-tb-20px">
-						<h5 class="margin-bottom-20px margin-top-10px"><a class="text-dark" href="/">Slow Cooker Loaded Potato Soup</a></h5>
+						<h5 class="margin-bottom-20px margin-top-10px"><a class="text-dark" href="/">{label}</a></h5>
+						<div class="col-8 text-left" style={{marginLeft: "-17px", marginBottom: "5px", marginTop: "-15px" }} ><a href="/" class="text-grey-2">
+						 Calories: {Math.ceil(calories)}</a></div>
+
 						<div class="rating">
 							<ul>
 								<li class="active"></li>
@@ -35,34 +91,21 @@ const Recipe = () => {
 						<hr/>
 						<h3>Ingredients</h3>
 						<ul>
-							<li><strong>16 oz</strong> rotini noodles</li>
-							<li><strong>24 oz</strong> spaghetti sauce (prego traditional)</li>
-							<li><strong>1/2 lb</strong> ground beef</li>
-							<li><strong>15 oz</strong> ricotta cheese</li>
-							<li><strong>14 oz</strong> mozzarella shredded</li>
-							<li><strong>1 can</strong> sliced olives</li>
-							<li><strong>1 packages</strong> pepperoni slices</li>
+					{ingredients.map((ingredient) => <li key={uuid()} > <strong>{Math.ceil(ingredient.weight)}  <span> grams</span> - </strong> {ingredient.text} </li> )}
+						
 						</ul>
-						<h3>Method</h3>
-						<ol>
-							<li>preheat oven to 350º</li>
-							<li>bring noodles to a boil then drain</li>
-							<li>while noodles are cooking in a bowl mix ricotta cheese, mozzarella cheese and olives together. it will be thick</li>
-							<li>cook ground beef then drain</li>
-							<li>add spaghetti sauce to ground beef</li>
-							<li>add pasta to beef and sauce mix, stir until well blended then move to 16x9 casserole dish</li>
-							<li>spread cheese mixture all over evenly</li>
-							<li>place pepperonis on top snd remember to partially overlap pepperonis since they shrink</li>
-							<li>back in 350º oven for 20 minutes</li>
-						</ol>
+					
 						<hr/>
 						<div class="row no-gutters">
 							<div class="col-4 text-left"><a href="/" class="text-red"><i class="far fa-heart"></i> Save</a></div>
-							<div class="col-8 text-right"><a href="/" class="text-grey-2"><i class="fas fa-users"></i> 6-8 servings</a></div>
+							<div class="col-8 text-left"><a href="/" class="text-grey-2"><i class="fas fa-users" style={{ marginRight: "0px" }}></i> Servings: {servings} </a></div>
+
 						</div>
 					</div>
 					<div class="background-light-grey border-top-1 border-grey padding-lr-30px padding-tb-20px">
-						<a href="/" class="d-inline-block text-grey-3 h6 margin-bottom-0px margin-right-15px"><img src="http://placehold.it/50x50" class="height-30px border-radius-30 margin-right-15px" alt=""/> Salim Aldosery</a>
+
+				
+						<a href={url} class="d-inline-block text-grey-3 h6 margin-bottom-0px margin-right-15px"><img src="http://placehold.it/50x50" class="height-30px border-radius-30 margin-right-15px" alt="" /> {source}</a>
 					</div>
 				</div>
 
@@ -233,12 +276,16 @@ const Recipe = () => {
 		</div>
 	</div>
 
-
-
-
-            
         </div>
     )
 }
 
-export default Recipe
+const mapStateToProps =(state)=>({
+	recipes: state.recipes.recipe
+ })
+
+const mapDispatchToProps = dispatch =>({
+	setRecipe: (recipe) => dispatch(setRecipe(recipe))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps) (Recipe)

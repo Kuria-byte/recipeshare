@@ -1,27 +1,28 @@
 import React from 'react'
+import { withRouter } from "react-router-dom";
 
 
 
-const RecipeItem = ({ recipe }) => {
+const RecipeItem = ({ recipe, match, history }) => {
 
 
     const { label, image, source, url, calories } = recipe.recipe;
-    // let bookmarked = recipe.bookmarked
-
-    // const [bookmark, setBookmark] = useState(bookmarked)
-
   
     let servings = recipe.recipe.yield
-
-    console.log(recipe.recipe.yield);
+    let foodID = label.toLowerCase();
 
 
     return (
         <div class="col-xl-3 col-lg-4 col-md-6 recipe-item margin-bottom-40px">
             <div class="card border-0 box-shadow">
-                <div class="card-img-top"><a href="/"><img src={image} alt="" /></a></div>
+                <div class="card-img-top"><span><img style={{marginLeft: "auto", marginTop: "15px", marginRight:"auto", display:"block" }} src={image} alt="" id={foodID.replace(/\s+/g, '')}
+                  onClick={() => history.push(`/recipe/:${foodID.replace(/\s+/g, '')}`)} />
+                  </span></div>
+
                 <div class="padding-lr-30px padding-tb-20px">
-                    <h5 class="margin-bottom-20px margin-top-10px"><a class="text-dark" href="/">{label}</a></h5>
+                    <h5 class="margin-bottom-20px margin-top-10px"><span class="text-dark">{label}</span></h5>
+                    <div class="col-8 text-left" style={{marginLeft: "-15px", marginBottom: "5px", marginTop: "-17px" }} >
+                    <a href="/" class="text-grey-2"> Calories: {Math.ceil(calories)}</a></div>
                     <div class="rating">
                         <ul>
                             <li class="active"></li>
@@ -34,8 +35,8 @@ const RecipeItem = ({ recipe }) => {
                     </div>
                     <hr />
                     <div class="row no-gutters">
-                        <div class="col-8 text-left"><a href="/" class="text-grey-2"><i class="fas fa-calculator" style={{ marginRight: "5px" }}> </i>Calories: {Math.ceil(calories)}</a></div>
-                        <div class="col-8 text-left"><a href="/" class="text-grey-2"><i class="fas fa-users" style={{ marginRight: "0px" }}></i> Servings: {servings} </a></div>
+                        <div class="col-4 text-left"><a href="/" class="text-red"><i class="far fa-heart"></i> Save</a></div>
+                        <div class="col-8 text-left"><span  style={{marginLeft: "15px"}} class="text-grey-2"><i class="fas fa-users" style={{ marginRight: "0px" }}></i> Servings: {servings} </span></div>
 
                     </div>
                 </div>
@@ -47,4 +48,4 @@ const RecipeItem = ({ recipe }) => {
     )
 }
 
-export default RecipeItem
+export default withRouter(RecipeItem);

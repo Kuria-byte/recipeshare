@@ -26,14 +26,9 @@ const RecipeOverview = ({recipes, query}) => {
 				<div class="row">
 
 					{recipes !== [] &&
-						recipes.map((recipe, bookmarked) => <RecipeItem key={uuid()} recipe={recipe} bookmarked={bookmarked} /> )
+						recipes.map((recipe, bookmarked) => <RecipeItem key={uuid()}  recipe={recipe} bookmarked={bookmarked} /> )
 					
 						}
-
-						
-
-
-				
 
 
 				</div>

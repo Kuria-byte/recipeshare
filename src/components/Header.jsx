@@ -1,10 +1,21 @@
-import React from 'react'
+import React, {useState} from 'react'
 import logo from '../assets/img/logo-small.png'
 
 const Header = () => {
+
+	const [ hide, setHide]= useState("menu-main")
+     let handleClick = () =>{
+		 if (!hide === false){
+			setHide(!hide)
+		 }else{
+			 setHide("menu-main")
+		 }
+	
+}
+
     return (
-        <div>
-        	<header class="background-main-color">
+     
+    <header class="background-main-color">
 		<div class="container">
 			<div class="header-output">
 				<div class="header-in">
@@ -12,24 +23,18 @@ const Header = () => {
 					<div class="row">
 						<div class="col-lg-2 col-md-12">
 							<a id="logo" href="/" class="d-inline-block margin-tb-5px"><img src={logo} alt=""/></a>
-							<a class="mobile-toggle padding-13px background-main-color"  href='/' ><i class="fas fa-bars"></i></a>
+							<a class="mobile-toggle padding-13px background-main-color"  onClick={handleClick}  ><i class="fas fa-bars"></i></a>
 						</div>
 						<div class="col-lg-8 col-md-12 position-inherit">
-							<ul id="menu-main" class="white-link dropdown-dark text-lg-center nav-menu link-padding-tb-17px">
+							<ul  id={hide} class="white-link dropdown-dark text-lg-center nav-menu link-padding-tb-17px">
 								<li class="has-dropdown"><a href="/">Home</a>
 							
 								</li>
-								<li class="has-dropdown"><a href="/">Recipes</a>
-									<ul class="sub-menu text-left">
-										<li><a href="recipes-grid-layout.html">Recipes - Grid Layout </a></li>
-										<li><a href="recipes-list-layout.html">Recipes - List Layout</a></li>
-
-									</ul>
+								<li class="has-dropdown"><a href="/recipes">Recipes</a>
+							
 								</li>
-								<li class="has-dropdown"><a href="/">Favourites</a>
-									<ul class="sub-menu text-left">
+								<li class="has-dropdown"><a href="/favourites">Favourites</a>
 								
-									</ul>
 								</li>
 								<li><a href="page-contact-us.html">Conact Us</a></li>
 							</ul>
@@ -46,7 +51,7 @@ const Header = () => {
 		</div>
 	</header>
             
-        </div>
+       
     )
 }
 

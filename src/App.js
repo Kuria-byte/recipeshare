@@ -33,7 +33,8 @@ function App() {
      <Route exact path="/" component={HomePage} />
      <Route exact path="/login" component={SignIn} />
      <Route exact path="/addrecipe" component={AddRecipe} />
-     <Route exact path="/recipe" component={Recipe} />
+     <Route path="/recipe/:id" render={(props) => <Recipe {...props} />}/> 
+   
      </Switch>
     </div>
   );
