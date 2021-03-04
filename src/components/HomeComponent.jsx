@@ -14,10 +14,10 @@ import CategorySection from './CategorySection';
 
 const HomeComponent = ({query, setQuery,recipes, setRecipe}) => {
 
-     let health = "alcohol-free"
+    //  let health = ""
 	const APP_ID = "6e821545"
 	const APP_KEY = "62416024663e954d8a87f8360e32e985"
-	const url = `https://api.edamam.com/search?q=${query}&app_id=${APP_ID}&app_key=${APP_KEY}&health=${health}`
+	const url = `https://api.edamam.com/search?q=${query}&app_id=${APP_ID}&app_key=${APP_KEY}`
   
 	const getData = async () => {
 	  if (query !== "") {
@@ -27,10 +27,7 @@ const HomeComponent = ({query, setQuery,recipes, setRecipe}) => {
 		}
 		console.log(result);
 		setRecipe(result.data.hits)
-
 		console.log(recipes)
-	    
-
 	
 	  } else {
 		console.log("Please fill the form");
@@ -47,13 +44,12 @@ const HomeComponent = ({query, setQuery,recipes, setRecipe}) => {
   
 	const onSubmit = (e) => {
 	  e.preventDefault();
-  
 	  getData();
+	  setTimeout(setQuery(''), 5000)
 	}
 
 
     return (
-
 
 
         <div>

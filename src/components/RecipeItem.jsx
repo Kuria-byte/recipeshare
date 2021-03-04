@@ -3,20 +3,25 @@ import { withRouter } from "react-router-dom";
 
 
 
-const RecipeItem = ({ recipe, match, history }) => {
+const RecipeItem = ({ recipe, match, history, index }) => {
 
 
     const { label, image, source, url, calories } = recipe.recipe;
+
+    // let handleClick  = (e) =>{
+    //     console.log(e.target.id)
+    // }
   
     let servings = recipe.recipe.yield
-    let foodID = label.toLowerCase();
+    // let foodID = label.toLowerCase();
+   
 
 
     return (
         <div class="col-xl-3 col-lg-4 col-md-6 recipe-item margin-bottom-40px">
             <div class="card border-0 box-shadow">
-                <div class="card-img-top"><span><img style={{marginLeft: "auto", marginTop: "15px", marginRight:"auto", display:"block" }} src={image} alt="" id={foodID.replace(/\s+/g, '')}
-                  onClick={() => history.push(`/recipe/:${foodID.replace(/\s+/g, '')}`)} />
+                <div class="card-img-top"><span><img style={{marginLeft: "auto", marginTop: "15px", marginRight:"auto", display:"block" }} src={image} alt="" id={index}
+                   onClick={() => history.push(`/recipe/:${index}`)} />
                   </span></div>
 
                 <div class="padding-lr-30px padding-tb-20px">

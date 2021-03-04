@@ -7,10 +7,7 @@ import { v4 as uuid } from 'uuid'
 const RecipeOverview = ({recipes, query}) => {
 
 
-
-
 	return (
-
 
 		<section class="padding-tb-100px background-light-grey">
 			<div class="container">
@@ -26,7 +23,7 @@ const RecipeOverview = ({recipes, query}) => {
 				<div class="row">
 
 					{recipes !== [] &&
-						recipes.map((recipe, bookmarked) => <RecipeItem key={uuid()}  recipe={recipe} bookmarked={bookmarked} /> )
+						recipes.map((recipe, index) => <RecipeItem key={uuid()}  recipe={recipe} index={index} /> )
 					
 						}
 

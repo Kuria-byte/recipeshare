@@ -1,6 +1,7 @@
 
 const INITIAL_STATE = {
     query: "",
+    parameters: "",
     dishType: "",
     mealType: "",
     cuisineType: "",
@@ -15,6 +16,11 @@ const searchReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 query: action.payload
             }
+            case 'SET_PARAMETERS':
+                return {
+                    ...state,
+                    query: action.payload
+                }
         case 'SET_DISH':
             return {
                 ...state,
