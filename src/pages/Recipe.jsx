@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import { v4 as uuid } from 'uuid'
 import Header from '../components/Header'
@@ -13,15 +13,10 @@ const Recipe = ({ match, recipes, setRecipe, setParameters, parameters }) => {
 	// let matchParmeters = window.location.pathname.substring(8);
 	let recipeParameters = Number((match.params.id).replace(":", ""))
 
-	console.log(recipeParameters)
 
-	setParameters(recipeParameters)
-
-	useEffect(() => {
+	if (recipeParameters === null){
 		setParameters(recipeParameters)
-	});
-
-
+	}
 
 	// Destructuring Recipe Object
 	let fetchedRecipe = {};

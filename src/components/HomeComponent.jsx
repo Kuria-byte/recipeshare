@@ -1,9 +1,10 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import {connect} from 'react-redux'
 import Axios from 'axios'
 
-import { setSearchQuery } from '../Redux/Search/search.actions'
+import { setSearchQuery, setSearchCount } from '../Redux/Search/search.actions'
 import { setRecipe} from '../Redux/Recipes/recipe.actions'
+
 
 import bg from '../images/bg6.jpg'
 import Header from './Header'
@@ -12,9 +13,10 @@ import CategorySection from './CategorySection';
 
 
 
-const HomeComponent = ({query, setQuery,recipes, setRecipe}) => {
+const HomeComponent = ({query, setQuery,recipes, setRecipe, count, setCount}) => {
 
-    //  let health = ""
+
+
 	const APP_ID = "6e821545"
 	const APP_KEY = "62416024663e954d8a87f8360e32e985"
 	const url = `https://api.edamam.com/search?q=${query}&app_id=${APP_ID}&app_key=${APP_KEY}`
@@ -36,21 +38,20 @@ const HomeComponent = ({query, setQuery,recipes, setRecipe}) => {
 	};
 
 
-  
 	const onChange = (e) => {
 	 setQuery(e.target.value)
-
 	}
+
+
+	useEffect(()  =>  {	
+	});
   
 	const onSubmit = (e) => {
 	  e.preventDefault();
-	  getData();
-	  setTimeout(setQuery(''), 5000)
+	  getData()
 	}
 
-
     return (
-
 
         <div>
         
@@ -75,7 +76,8 @@ const HomeComponent = ({query, setQuery,recipes, setRecipe}) => {
 									</div>
 
 									<div class="col-md-4">
-										<button class="listing-bottom background-second-color box-shadow" onClick={getData} type="submit" >Search Now</button>
+										
+										<a href="#" class="listing-bottom background-second-color box-shadow" onClick={getData} type="submit" >Search Now</a>
 									</div>
 								</form>
 							</div>
@@ -101,12 +103,14 @@ const HomeComponent = ({query, setQuery,recipes, setRecipe}) => {
 
 const mapStateToProps =(state)=>({
    query: state.query.query,
-   recipes: state.recipes.recipe
+   recipes: state.recipes.recipe,
+   count: state.query.count
 })
 
 const mapDispatchToProps = dispatch =>({
 	setQuery : (query) => dispatch(setSearchQuery(query)),
-	setRecipe: (recipe) => dispatch(setRecipe(recipe))
+	setRecipe: (recipe) => dispatch(setRecipe(recipe)),
+	setCount : (count) => dispatch(setSearchCount(count)),
 })
 
 export default connect (mapStateToProps,mapDispatchToProps) (HomeComponent)

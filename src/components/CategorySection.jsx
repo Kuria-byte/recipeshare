@@ -1,7 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 import Axios from 'axios'
+import {connect} from 'react-redux'
 
-import chicken from '../images/chicken.jpg'
+import { setSearchQuery } from '../Redux/Search/search.actions'
+import { setRecipe} from '../Redux/Recipes/recipe.actions'
+
+import breakfast from '../images/breakfast.jpg'
 import beef from '../images/beef.jpg'
 import cocktail from '../images/cocktail.jpg'
 import salad from '../images/salad.jpg'
@@ -10,63 +14,41 @@ import pizza from '../images/pizza.jpg'
 import RecipeOverview from './RecipeOverview'
 
 
-const CategorySection = () => {
-	const [query, setQuery] = useState("")
-	let [recipes, setRecipes] = useState([])
-	let [count, setCount] = useState(10)
-	const [alert, setAlert] = useState("");
+
+const CategorySection = ( {query, setQuery,recipes, setRecipe} ) => {
+
 
 	const APP_ID = "6e821545"
 	const APP_KEY = "62416024663e954d8a87f8360e32e985"
-	const url = `https://api.edamam.com/search?q=${query}&app_id=${APP_ID}&app_key=${APP_KEY}&from=0&to=${count}`
-
-
+	const url = `https://api.edamam.com/search?q=${query}&app_id=${APP_ID}&app_key=${APP_KEY}`
+  
 	const getData = async () => {
-		if (query !== "") {
-			const result = await Axios.get(url);
-			if (!result.data.more) {
-				return setAlert("No food with such name");
-			}
-			console.log(result);
-			setRecipes(result.data.hits);
-			setAlert("");
-		} else {
-			setAlert("Please fill the form");
-			setAlert(alert)
+	  if (query !== "") {
+		const result = await Axios.get(url);
+		if (!result.data.more) {
+		  return console.log("No food with such name");
 		}
+		console.log(result);
+		setRecipe(result.data.hits)
+		console.log(recipes)
+	
+	  } else {
+		console.log("Please fill the form");
+	
+	  }
 	};
+
 
 
 	const handleClick = (e) => {
 		e.preventDefault();
 		setQuery(e.target.id)
-		if (recipes !== []) {
-			getData()
-		}
 	}
-	// const handleDish = (e) => {
-	// 	e.preventDefault();
-	// 	setQuery(e.target.id)
-	// 	if (recipes !== []) {
-	// 		getData()
-	// 	}
-	// }
 
-	// const handleMeal = (e) => {
-	// 	e.preventDefault();
-	// 	setQuery(e.target.id)
-	// 	if (recipes !== []) {
-	// 		getData()
-	// 	}
-	// }
 
-	// const handleCuisine = (e) => {
-	// 	e.preventDefault();
-	// 	setQuery(e.target.id)
-	// 	if (recipes !== []) {
-	// 		getData()
-	// 	}
-	// }
+	useEffect(()  =>  {
+		getData()
+	},[query]);
 
 
 
@@ -80,8 +62,8 @@ const CategorySection = () => {
 
 					<div class="col-xl-2 col-lg-3 col-md-4 col-6 sm-mb-25px">
 						<span class="d-block box-shadow background-main-color text-white hvr-float" >
-							<div class="thum"><img src={chicken} alt="" /></div>
-							<h4 id="Breakfast" class="text-center padding-15px" onClick={handleClick} >Breakfast</h4>
+							<div class="thum"><img src={breakfast} alt="" /></div>
+							<h4 id="breakfast" class="text-center padding-15px" onClick={handleClick} >Breakfast</h4>
 
 						</span>
 					</div>
@@ -101,7 +83,7 @@ const CategorySection = () => {
 					<div class="col-xl-2 col-lg-3 col-md-4 col-6 sm-mb-25px" >
 						<span class="d-block box-shadow background-main-color text-white hvr-float">
 							<div class="thum"><img src={salad} alt="" /></div>
-							<h4 id="Drinks" class="text-center padding-15px" onClick={handleClick}>Drinks</h4>
+							<h4 id="salad" class="text-center padding-15px" onClick={handleClick}>Salad</h4>
 						</span>
 					</div>
 					<div class="col-xl-2 col-lg-3 col-md-4 col-6 sm-mb-25px">
@@ -118,14 +100,12 @@ const CategorySection = () => {
 					</div>
 				</div>
 			</div>
-			{query === "" ? "" : <RecipeOverview recipes={recipes} query={query} />}
-
-			{ query === "" ? "" :
+{/* 			
 				<div class="text-center">
-					<span class="btn box-shadow margin-top-50px padding-tb-10px btn-sm border-2 border-radius-30 btn-inline-block width-210px background-second-color text-white" onClick={() => { setCount(count + 10) }} >
+					<span class="btn box-shadow margin-top-50px padding-tb-10px btn-sm border-2 border-radius-30 btn-inline-block width-210px background-second-color text-white" >
 						Load More Recipes
 					</span>
-				</div>}
+				</div> */}
 
 		</div>
 
@@ -133,5 +113,15 @@ const CategorySection = () => {
 	)
 }
 
-export default CategorySection
+const mapStateToProps =(state)=>({
+	query: state.query.query,
+	recipes: state.recipes.recipe
+ })
+ 
+ const mapDispatchToProps = dispatch =>({
+	 setQuery : (query) => dispatch(setSearchQuery(query)),
+	 setRecipe: (recipe) => dispatch(setRecipe(recipe))
+ })
+
+export default connect(mapStateToProps,mapDispatchToProps) (CategorySection)
 

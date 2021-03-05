@@ -5,7 +5,7 @@ const INITIAL_STATE = {
     dishType: "",
     mealType: "",
     cuisineType: "",
-    count: 12
+    count: 16
 }
 
 

@@ -13,7 +13,7 @@ const RecipeItem = ({ recipe, match, history, index }) => {
     // }
   
     let servings = recipe.recipe.yield
-    // let foodID = label.toLowerCase();
+  
    
 
 
@@ -21,7 +21,7 @@ const RecipeItem = ({ recipe, match, history, index }) => {
         <div class="col-xl-3 col-lg-4 col-md-6 recipe-item margin-bottom-40px">
             <div class="card border-0 box-shadow">
                 <div class="card-img-top"><span><img style={{marginLeft: "auto", marginTop: "15px", marginRight:"auto", display:"block" }} src={image} alt="" id={index}
-                   onClick={() => history.push(`/recipe/:${index}`)} />
+                   onClick={() => history.push(`/recipe/:${index}/${label}`)} />
                   </span></div>
 
                 <div class="padding-lr-30px padding-tb-20px">

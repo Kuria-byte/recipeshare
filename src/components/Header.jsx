@@ -33,10 +33,12 @@ const Header = () => {
 								<li class="has-dropdown"><a href="/recipes">Recipes</a>
 							
 								</li>
+							
 								<li class="has-dropdown"><a href="/favourites">Favourites</a>
 								
 								</li>
-								<li><a href="page-contact-us.html">Conact Us</a></li>
+								<li><a href="/login">Login</a></li>
+								
 							</ul>
 						</div>
 						<div class="col-lg-2 col-md-12 d-none d-lg-block">
