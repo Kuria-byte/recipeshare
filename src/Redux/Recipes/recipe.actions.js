@@ -9,3 +9,9 @@ export const addRecipeBookmark = (recipe) => ({
 
 });
 
+export const addFavourites = (recipe) => ({
+    type :'ADD_FAVOURITE',
+    payload : recipe
+
+});
+

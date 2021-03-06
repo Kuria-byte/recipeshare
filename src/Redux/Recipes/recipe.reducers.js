@@ -1,7 +1,8 @@
-import { addRecipe} from './recipe.utils'
+import { addRecipe,addFavouritesFunction } from './recipe.utils'
 
 const INITIAL_STATE = {
-    recipe: []
+    recipe: [],
+    favouriteRecipes: [],   
 }
 
 
@@ -17,6 +18,11 @@ const recipeReducer = (state = INITIAL_STATE, action) => {
                     ...state,
                     recipe: addRecipe(state.recipe, action.payload)
                 }
+                case 'ADD_FAVOURITE':
+                    return {
+                        ...state,
+                        favouriteRecipes: addFavouritesFunction (state.recipe, action.payload)
+                    }
 
         default:
             return state;

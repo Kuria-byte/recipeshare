@@ -18,7 +18,7 @@ const RecipeOverview = ({  query, recipes, setCount, count }) => {
 					<h2 class="font-weight-700 text-main-color">Latest {query} Recipes</h2>
 					<div class="row justify-content-center margin-bottom-45px">
 						<div class="col-md-7">
-							<p class="text-grey-2">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
+							<p class="text-grey-2">our app instantly finds matching recipes from the most popular cooking websites!</p>
 						</div>
 					</div>
 				</div>
@@ -26,7 +26,7 @@ const RecipeOverview = ({  query, recipes, setCount, count }) => {
 				<div class="row">
 
 					{recipes !== [] &&
-						recipes.map((recipe, index) => <RecipeItem key={uuid()} recipe={recipe} index={index} />)
+						recipes.map((recipe, index) => <RecipeItem key={uuid()} recipe={recipe} index={index}  />)
 
 					}
 

@@ -1,13 +1,31 @@
 export const addRecipe = (recipeItems, recipeToAdd) => {
-    const existingCartItem = recipeItems.find(
-        cartItem => cartItem.id === recipeToAdd.id
+
+    const existingRecipe = recipeItems.find(
+        recipeItem => recipeItem.id === recipeToAdd.id
     );
 
-    if (existingCartItem) {
+    if (existingRecipe) {
         return recipeItems.map((recipeItem) => recipeItem.id === recipeToAdd.id ? {
-            ...recipeItem, quantity: recipeItem.quantity + 1
+            ...recipeItem
         } : recipeItem)
     }
 
-    return [...recipeItems, { ...recipeToAdd, quantity: 1 }]
+    return [...recipeItems, { ...recipeToAdd }]
 };
+
+export const addFavouritesFunction = (recipeItems, recipeToAdd) => {
+
+    const existingRecipe = recipeItems.find(
+        recipeItem => recipeItem.id === recipeToAdd.id
+    );
+
+
+    if (existingRecipe){
+        return  recipeItems.map((recipeItem) => recipeItem.id === recipeToAdd.id ?  { ...recipeItem } : recipeItem )
+    }
+
+   
+    return [...recipeItems, {...recipeToAdd}]
+};
+
+

@@ -4,16 +4,14 @@ import "firebase/auth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyB3V6K2pXQvBxG_zH9xyBkOTwCdRxPqVvQ",
-  authDomain: "reactecommerce-2f034.firebaseapp.com",
-  databaseURL: "https://reactecommerce-2f034.firebaseio.com",
-  projectId: "reactecommerce-2f034",
-  storageBucket: "reactecommerce-2f034.appspot.com",
-  messagingSenderId: "817361145392",
-  appId: "1:817361145392:web:cedb3ebc6a61105a73e7f5",
-  measurementId: "G-9SCTMXEZP8",
+  apiKey: "AIzaSyDQhfNbtSwYly44d0t_Qi0ZKGTmCLDeviE",
+  authDomain: "recipes-31ebf.firebaseapp.com",
+  projectId: "recipes-31ebf",
+  storageBucket: "recipes-31ebf.appspot.com",
+  messagingSenderId: "108280543235",
+  appId: "1:108280543235:web:1eceb2ec93caa31a227636",
+  measurementId: "G-683T0J5C7V"
 };
-
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 

@@ -1,11 +1,12 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import Footer from '../components/Footer'
-import Header from '../components/Header'
 
-const SignIn = () => {
+
+const SignIn = ({user}) => {
     return (
         <div>
-<Header/>
+
         	<div id="page-title" class="padding-tb-30px gradient-white text-center">
 		<div class="container">
 			<ol class="breadcrumb opacity-5">
@@ -50,7 +51,7 @@ const SignIn = () => {
 
 
 
-					<p>Don't you have an account? <a href="page-sign-up.html">Register Now!</a> </p>
+					<p>Don't you have an account? <a href="/signup">Register Now!</a> </p>
 				</form>
 			</div>
 		</div>
@@ -62,5 +63,9 @@ const SignIn = () => {
         </div>
     )
 }
+const mapStateToProps = (state) => ({
+    user: state.user.currentUser,
+  
+  })
 
-export default SignIn
+export default connect(mapStateToProps)( SignIn)

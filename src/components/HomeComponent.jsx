@@ -7,13 +7,12 @@ import { setRecipe} from '../Redux/Recipes/recipe.actions'
 
 
 import bg from '../images/bg6.jpg'
-import Header from './Header'
 import RecipeOverview from './RecipeOverview';
 import CategorySection from './CategorySection';
 
 
 
-const HomeComponent = ({query, setQuery,recipes, setRecipe, count, setCount}) => {
+const HomeComponent = ({query, setQuery,recipes, setRecipe, count, setCount, user}) => {
 
 
 
@@ -55,7 +54,7 @@ const HomeComponent = ({query, setQuery,recipes, setRecipe, count, setCount}) =>
 
         <div>
         
-<Header/>
+
     <div class="banner padding-tb-20px background-overlay" style={{ backgroundImage: `url(${bg})`}}  >
 		<div class="container">
 
@@ -104,7 +103,8 @@ const HomeComponent = ({query, setQuery,recipes, setRecipe, count, setCount}) =>
 const mapStateToProps =(state)=>({
    query: state.query.query,
    recipes: state.recipes.recipe,
-   count: state.query.count
+   count: state.query.count,
+   user: state.user.currentUser,
 })
 
 const mapDispatchToProps = dispatch =>({
