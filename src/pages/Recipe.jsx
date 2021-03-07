@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { v4 as uuid } from 'uuid'
-import Header from '../components/Header'
+
 
 import { setRecipe } from '../Redux/Recipes/recipe.actions'
 import { setParameters } from '../Redux/Search/search.actions'
@@ -9,25 +9,28 @@ import { setParameters } from '../Redux/Search/search.actions'
 const Recipe = ({ match, recipes, setRecipe, setParameters, parameters }) => {
 
 	//Getting params from url
-
 	// let matchParmeters = window.location.pathname.substring(8);
 	let recipeParameters = Number((match.params.id).replace(":", ""))
 
 
-	if (recipeParameters === null){
+	if (recipeParameters === null) {
 		setParameters(recipeParameters)
 	}
 
 	// Destructuring Recipe Object
 	let fetchedRecipe = {};
-	recipes.filter((recipe, index) => index === recipeParameters).map((recipe) => fetchedRecipe = recipe)
-	const { label, image, source, calories, ingredients, url } = fetchedRecipe.recipe;
+	if (fetchedRecipe !== {}) {
+		recipes.filter((recipe, index) => index === recipeParameters).map((recipe) => fetchedRecipe = recipe)
+	}
+	let { label, image, source, calories, ingredients, url } = fetchedRecipe.recipe;
 	let servings = fetchedRecipe.recipe.yield
+
+
 
 
 	return (
 		<div>
-			<Header />
+
 			<div id="page-title" class="padding-tb-30px gradient-white">
 				<div class="container text-left">
 					<ol class="breadcrumb opacity-5">

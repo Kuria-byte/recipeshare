@@ -1,18 +1,47 @@
 import React from 'react'
+import { firestore,firestore2 } from '../Firebase/firebase.utils'
 import { withRouter } from "react-router-dom";
+import { connect } from 'react-redux';
 
 
-const RecipeItem = ({ recipe, match, history, index, favouriteRecipes, addFavourites }) => {
+const RecipeItem = ({ recipe, match, history, index,user }) => {
 
 
     const { label, image, source, url, calories } = recipe.recipe;
     let servings = recipe.recipe.yield
 
+    let favourites = recipe.recipe
+
+    const addFavouriteRecipe = () => {
+        const db = firestore;
+
+        const userRef = db.collection("users").doc(user.id);
+        console.log(userRef)
+        console.log(favourites)
+
+        if (userRef) {
+            return userRef.update({
+                "favouriteRecipes" : firestore2.FieldValue.arrayUnion(favourites)
+            })
+                .then(function () {
+                    console.log("Document successfully written!");
+                    console.log(userRef)
+                })
+                .catch(function (error) {
+                    console.error("Error writing document: ", error);
+                });
+
+        } else {
+            console.log(favourites)
+        }
 
 
-    let handleSave = () => {
 
-  
+    };
+
+    let handleSave = async => {
+        addFavouriteRecipe()
+        console.log(favourites)
     }
 
 
@@ -27,7 +56,7 @@ const RecipeItem = ({ recipe, match, history, index, favouriteRecipes, addFavour
                 <div class="padding-lr-30px padding-tb-20px">
                     <h5 class="margin-bottom-20px margin-top-10px"><span class="text-dark">{label}</span></h5>
                     <div class="col-8 text-left" style={{ marginLeft: "-15px", marginBottom: "5px", marginTop: "-17px" }} >
-                        <a href="/" class="text-grey-2"> Calories: {Math.ceil(calories)}</a></div>
+                        <a href="#" class="text-grey-2"> Calories: {Math.ceil(calories)}</a></div>
                     <div class="rating">
                         <ul>
                             <li class="active"></li>
@@ -52,8 +81,10 @@ const RecipeItem = ({ recipe, match, history, index, favouriteRecipes, addFavour
         </div>
     )
 }
+const mapStateToProps = (state) => ({
+    user: state.user.currentUser,
+})
 
 
 
-
-export default withRouter(RecipeItem);
+export default withRouter(connect(mapStateToProps)(RecipeItem)) ;

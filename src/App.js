@@ -27,6 +27,7 @@ import './assets/css/fontawesome-all.min.css'
 import Header from './components/Header';
 
 
+
 class App extends Component {
 
   unsubscribeFromAuth = null;
@@ -45,7 +46,7 @@ class App extends Component {
         });
 
       } else {
-        // this.props.dispatch(setCurrentUser({ user: userAuth }))
+        this.props.dispatch(setCurrentUser(null))
         
       }
 
@@ -73,6 +74,7 @@ class App extends Component {
           <Route exact path="/addrecipe" component={AddRecipe} />
           <Route path="/recipe/:id" render={(props) => <Recipe {...props} />} />
           <Route path="/favourites" render={(props) => <FavouriteRecipes {...props} />} />
+         
 
         </Switch>
       </div>

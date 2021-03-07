@@ -68,11 +68,6 @@ class SignUp extends Component {
 
 
 
-
-
-
-
-
     render() {
         const { displayName, email, password } = this.state;
 

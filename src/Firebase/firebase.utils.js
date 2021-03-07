@@ -16,7 +16,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 
-export const createUserProfileDocument = async (userAuth, additonalData) => {
+export const createUserProfileDocument = async (userAuth, favourites) => {
   if (!userAuth) return;
 
   const userRef = firestore.doc(`users/${userAuth.uid}`);
@@ -31,7 +31,7 @@ export const createUserProfileDocument = async (userAuth, additonalData) => {
         displayName,
         email,
         createdAt,
-        ...additonalData,
+        ...favourites,
       });
     } catch (error) {
       console.log("error creating user", error.message);
@@ -46,6 +46,8 @@ export const createUserProfileDocument = async (userAuth, additonalData) => {
 
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
+export const firestore2 = firebase.firestore;
+
 
 const provider = new firebase.auth.GoogleAuthProvider();
 provider.setCustomParameters({ promppt: "Select Account" });
