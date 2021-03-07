@@ -40,8 +40,12 @@ const RecipeItem = ({ recipe, match, history, index,user }) => {
     };
 
     let handleSave = async => {
-        addFavouriteRecipe()
-        console.log(favourites)
+        if (user){
+            addFavouriteRecipe()
+            console.log(favourites)
+        }else{
+            history.push("/login")
+        }
     }
 
 
@@ -69,6 +73,7 @@ const RecipeItem = ({ recipe, match, history, index,user }) => {
                     </div>
                     <hr />
                     <div class="row no-gutters">
+                    
                         <div class="col-4 text-left" ><span class="text-red"><i onClick={handleSave} class="far fa-heart" ></i> Save</span></div>
                         <div class="col-8 text-left"><span style={{ marginLeft: "15px" }} class="text-grey-2"><i class="fas fa-users" style={{ marginRight: "0px" }}></i> Servings: {servings} </span></div>
 
