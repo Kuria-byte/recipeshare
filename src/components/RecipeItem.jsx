@@ -2,6 +2,7 @@ import React from 'react'
 import { firestore,firestore2 } from '../Firebase/firebase.utils'
 import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
+import Toastify from 'toastify-js'
 
 
 const RecipeItem = ({ recipe, match, history, index,user }) => {
@@ -43,6 +44,19 @@ const RecipeItem = ({ recipe, match, history, index,user }) => {
         if (user){
             addFavouriteRecipe()
             console.log(favourites)
+             Toastify({
+                text: `Added to favourites🎉`,
+                backgroundColor: "linear-gradient(to right, #f44336, #ed3f32, #e73b2d, #e03629, #da3225)",
+                className: "success",
+                duration: 7000,
+                newWindow: true,
+                close: true,
+                gravity: "bottom", // `top` or `bottom`
+                position: 'center', // `left`, `center` or `right`
+                stopOnFocus: true,
+              }).showToast()
+
+
         }else{
             history.push("/login")
         }
@@ -80,7 +94,7 @@ const RecipeItem = ({ recipe, match, history, index,user }) => {
                     </div>
                 </div>
                 <div class="background-light-grey border-top-1 border-grey padding-lr-30px padding-tb-20px">
-                    <a href={url} class="d-inline-block text-grey-3 h6 margin-bottom-0px margin-right-15px"><img src="http://placehold.it/50x50" class="height-30px border-radius-30 margin-right-15px" alt="" /> {source}</a>
+                    <a href={url} target="_blank" class="d-inline-block text-grey-3 h6 margin-bottom-0px margin-right-15px"><img src="http://placehold.it/50x50" class="height-30px border-radius-30 margin-right-15px" alt="" /> {source}</a>
                 </div>
             </div>
         </div>

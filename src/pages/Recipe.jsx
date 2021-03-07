@@ -1,12 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { v4 as uuid } from 'uuid'
-
+import Toastify from 'toastify-js'
+import { firestore,firestore2 } from '../Firebase/firebase.utils'
+import { withRouter } from "react-router-dom";
 
 import { setRecipe } from '../Redux/Recipes/recipe.actions'
 import { setParameters } from '../Redux/Search/search.actions'
 
-const Recipe = ({ match, recipes, setRecipe, setParameters, parameters }) => {
+const Recipe = ({ match, recipes, setRecipe, setParameters, parameters , user, history}) => {
 
 	//Getting params from url
 	// let matchParmeters = window.location.pathname.substring(8);
@@ -25,7 +27,57 @@ const Recipe = ({ match, recipes, setRecipe, setParameters, parameters }) => {
 	let { label, image, source, calories, ingredients, url } = fetchedRecipe.recipe;
 	let servings = fetchedRecipe.recipe.yield
 
+	let favourites = fetchedRecipe.recipe
 
+	const addFavouriteRecipe = () => {
+        const db = firestore;
+
+        const userRef = db.collection("users").doc(user.id);
+        console.log(userRef)
+        console.log(favourites)
+
+        if (userRef) {
+            return userRef.update({
+                "favouriteRecipes" : firestore2.FieldValue.arrayUnion(favourites)
+            })
+                .then(function () {
+                    console.log("Document successfully written!");
+                    console.log(userRef)
+                })
+                .catch(function (error) {
+                    console.error("Error writing document: ", error);
+                });
+
+        } else {
+            console.log(favourites)
+        }
+
+    };
+
+
+
+	let handleSave = async => {
+        if (user){
+            addFavouriteRecipe()
+            console.log(favourites)
+             Toastify({
+                text: `Added to favourites🎉`,
+                backgroundColor: "linear-gradient(to right, #f44336, #ed3f32, #e73b2d, #e03629, #da3225)",
+                className: "success",
+                duration: 7000,
+                newWindow: true,
+                close: true,
+                gravity: "bottom", // `top` or `bottom`
+                position: 'center', // `left`, `center` or `right`
+                stopOnFocus: true,
+              }).showToast()
+
+
+        }else{
+            history.push("/login")
+        }
+
+	}
 
 
 	return (
@@ -73,7 +125,7 @@ const Recipe = ({ match, recipes, setRecipe, setParameters, parameters }) => {
 
 								<hr />
 								<div class="row no-gutters">
-									<div class="col-4 text-left"><a href="/" class="text-red"><i class="far fa-heart"></i> Save</a></div>
+									<div class="col-4 text-left"><a href="#" class="text-red"><i onClick={handleSave} class="far fa-heart"></i> Save</a></div>
 									<div class="col-8 text-left"><a href="/" class="text-grey-2"><i class="fas fa-users" style={{ marginRight: "0px" }}></i> Servings: {servings} </a></div>
 
 								</div>
@@ -106,14 +158,14 @@ const Recipe = ({ match, recipes, setRecipe, setParameters, parameters }) => {
 													<li></li>
 												</ul>
 											</div>
-											<p class="margin-top-15px text-grey-2">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. </p>
+											<p class="margin-top-15px text-grey-2">This recipes are really good, I always save some for later </p>
 										</div>
 									</li>
 									<li class="border-bottom-1 border-grey-1 margin-bottom-20px">
 										<img src="http://placehold.it/60x60" class="float-left margin-right-20px border-radius-60 margin-bottom-20px" alt="" />
 										<div class="margin-left-85px">
 											<a class="d-inline-block text-dark text-medium margin-right-20px" href="/">Rabie Elkheir </a>
-											<span class="text-extra-small">Date :  <a href="/" class="text-main-color">July 15, 2016</a></span>
+											<span class="text-extra-small">Date :  <a href="/" class="text-main-color">July 15, 2020</a></span>
 											<div class="rating">
 												<ul>
 													<li class="active"></li>
@@ -123,14 +175,14 @@ const Recipe = ({ match, recipes, setRecipe, setParameters, parameters }) => {
 													<li></li>
 												</ul>
 											</div>
-											<p class="margin-top-15px text-grey-2">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. </p>
+											<p class="margin-top-15px text-grey-2"> I'm in bed scrolling through my next meals, should i get breakfast or cocktails </p>
 										</div>
 									</li>
 									<li class="border-bottom-1 border-grey-1 margin-bottom-20px">
 										<img src="http://placehold.it/60x60" class="float-left margin-right-20px border-radius-60 margin-bottom-20px" alt="" />
 										<div class="margin-left-85px">
 											<a class="d-inline-block text-dark text-medium margin-right-20px" href="/">Adel Alsaeed </a>
-											<span class="text-extra-small">Date :  <a href="/" class="text-main-color">July 15, 2016</a></span>
+											<span class="text-extra-small">Date :  <a href="/" class="text-main-color">July 15, 2021</a></span>
 											<div class="rating">
 												<ul>
 													<li class="active"></li>
@@ -140,7 +192,7 @@ const Recipe = ({ match, recipes, setRecipe, setParameters, parameters }) => {
 													<li class="active"></li>
 												</ul>
 											</div>
-											<p class="margin-top-15px text-grey-2">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. </p>
+											<p class="margin-top-15px text-grey-2">Well detailed recipe informations, on my way to the grocery store </p>
 										</div>
 									</li>
 								</ul>
@@ -148,7 +200,7 @@ const Recipe = ({ match, recipes, setRecipe, setParameters, parameters }) => {
 							</div>
 						</div>
 
-						<div class="margin-bottom-80px box-shadow">
+						{/* <div class="margin-bottom-80px box-shadow">
 							<div class="padding-30px background-white">
 								<h3><i class="far fa-star margin-right-10px text-main-color"></i> Add Review </h3>
 								<hr />
@@ -170,12 +222,12 @@ const Recipe = ({ match, recipes, setRecipe, setParameters, parameters }) => {
 									<a href="/" class="btn-sm btn-lg btn-block background-main-color text-white text-center font-weight-bold text-uppercase border-radius-10 padding-10px">Add Now !</a>
 								</form>
 							</div>
-						</div>
+						</div> */}
 
 
 
 					</div>
-
+{/* 
 					<div class="col-lg-4">
 						<div class="listing-search box-shadow background-main-color padding-30px margin-bottom-30px">
 							<form class="row no-gutters">
@@ -247,7 +299,7 @@ const Recipe = ({ match, recipes, setRecipe, setParameters, parameters }) => {
 							</div>
 						</div>
 
-					</div>
+					</div> */}
 
 				</div>
 			</div>
@@ -258,7 +310,8 @@ const Recipe = ({ match, recipes, setRecipe, setParameters, parameters }) => {
 
 const mapStateToProps = (state) => ({
 	recipes: state.recipes.recipe,
-	parameters: state.query.parameters
+	parameters: state.query.parameters,
+	user: state.user.currentUser,
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -266,4 +319,4 @@ const mapDispatchToProps = dispatch => ({
 	setParameters: (parameters) => dispatch(setParameters(parameters))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Recipe)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Recipe))

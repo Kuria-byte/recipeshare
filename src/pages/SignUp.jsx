@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Footer from '../components/Footer'
 import { withRouter } from "react-router-dom";
+import Toastify from 'toastify-js'
 import { auth, signinwithGoogle, createUserProfileDocument } from '../Firebase/firebase.utils'
 
 class SignUp extends Component {
@@ -37,6 +38,17 @@ class SignUp extends Component {
             );
 
             await createUserProfileDocument(user, { displayName });
+            await Toastify({
+                text: `Welcome to socialrecipes 🎉`,
+                backgroundColor: "linear-gradient(to right, #f44336, #ed3f32, #e73b2d, #e03629, #da3225)",
+                className: "success",
+                duration: 7000,
+                newWindow: true,
+                close: true,
+                gravity: "bottom", // `top` or `bottom`
+                position: 'center', // `left`, `center` or `right`
+                stopOnFocus: true,
+              }).showToast()
             this.props.history.push('/')
             this.setState({
                 displayName: '',
@@ -58,11 +70,20 @@ class SignUp extends Component {
         console.log(this.state)
     };
 
-
-
     handleGoogleSign  = async () => {
         await signinwithGoogle()
-        await setTimeout(this.props.history.push("/") ,7000)
+        await Toastify({
+            text: `Welcome ${this.props.user.displayName } 🎉`,
+            backgroundColor: "linear-gradient(to right, #f44336, #ed3f32, #e73b2d, #e03629, #da3225)",
+            className: "success",
+            duration: 7000,
+            newWindow: true,
+            close: true,
+            gravity: "bottom", // `top` or `bottom`
+            position: 'center', // `left`, `center` or `right`
+            stopOnFocus: true,
+          }).showToast()
+          await setTimeout(this.props.history.push("/") ,5000)
     }
 
 

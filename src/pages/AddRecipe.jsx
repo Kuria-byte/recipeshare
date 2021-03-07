@@ -32,16 +32,14 @@ const AddRecipe = () => {
 
 	const addRecipe = () => {
 		const db =firestore;
-		db.settings({
-		  timestampsInSnapshots: true
-		});
+	
 		const docRef= db.collection("recipes").add({
-	      name: {recipeName},
-		  category: {category},
-		  key:{keyWords},
-		  description: {description},
-		  image:{image},
-		  video:{video}
+	      name: recipeName,
+		  category: category,
+		  key:keyWords,
+		  description: description,
+		  image:image,
+		  video:video
 		})
 		.then(function() {
 			console.log("Document successfully written!");

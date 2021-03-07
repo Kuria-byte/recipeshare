@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import Footer from '../components/Footer'
 import { withRouter } from "react-router-dom";
 import { auth, signinwithGoogle } from '../Firebase/firebase.utils'
+import Toastify from 'toastify-js'
 
 
 const SignIn = ({ user, history }) => {
@@ -24,6 +25,17 @@ const SignIn = ({ user, history }) => {
 		try {
 
             await auth.signInWithEmailAndPassword(email, password)
+			await Toastify({
+                text: `Welcome back 🎉`,
+                backgroundColor: "linear-gradient(to right, #f44336, #ed3f32, #e73b2d, #e03629, #da3225)",
+                className: "success",
+                duration: 7000,
+                newWindow: true,
+                close: true,
+                gravity: "bottom", // `top` or `bottom`
+                position: 'center', // `left`, `center` or `right`
+                stopOnFocus: true,
+              }).showToast()
              history.push('/')
 			setEmail('')
 			setPassword('')
@@ -35,7 +47,18 @@ const SignIn = ({ user, history }) => {
 
     let handleGoogleSign  = async () => {
         await signinwithGoogle()
-        await setTimeout(history.push("/") ,6000)
+		await Toastify({
+            text: `Welcome back 🎉`,
+            backgroundColor: "linear-gradient(to right, #f44336, #ed3f32, #e73b2d, #e03629, #da3225)",
+            className: "success",
+            duration: 7000,
+            newWindow: true,
+            close: true,
+            gravity: "bottom", // `top` or `bottom`
+            position: 'center', // `left`, `center` or `right`
+            stopOnFocus: true,
+          }).showToast()
+        await setTimeout(history.push("/") ,5000)
     }
 
 

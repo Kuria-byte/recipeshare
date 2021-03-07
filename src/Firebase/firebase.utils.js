@@ -2,6 +2,7 @@ import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
 
+
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyDQhfNbtSwYly44d0t_Qi0ZKGTmCLDeviE",
@@ -16,11 +17,11 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 
-export const createUserProfileDocument = async (userAuth, favourites) => {
+export const createUserProfileDocument = async (userAuth) => {
   if (!userAuth) return;
 
   const userRef = firestore.doc(`users/${userAuth.uid}`);
-  const snapShot = await userRef.get();  
+  const snapShot = await userRef.get();
 
   if (!snapShot.exists) {
     const { displayName, email } = userAuth;
@@ -31,15 +32,17 @@ export const createUserProfileDocument = async (userAuth, favourites) => {
         displayName,
         email,
         createdAt,
-        ...favourites,
+        favouriteRecipes: [],
       });
+     
+
     } catch (error) {
       console.log("error creating user", error.message);
     }
   }
   console.log(userRef);
   return userRef;
-  
+
 };
 
 
