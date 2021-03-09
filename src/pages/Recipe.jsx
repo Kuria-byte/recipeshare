@@ -46,8 +46,6 @@ const Recipe = ({ match, recipes, setRecipe, setParameters, parameters , user, h
                 stopOnFocus: true,
               }).showToast()
 
-        }else{
-            history.push("/login")
         }
 	}
 
