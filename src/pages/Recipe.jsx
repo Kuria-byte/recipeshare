@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { v4 as uuid } from 'uuid'
 import Toastify from 'toastify-js'
-import { firestore,firestore2 } from '../Firebase/firebase.utils'
+import { addFavouriteRecipe } from '../Firebase/firebase.utils'
 import { withRouter } from "react-router-dom";
 
 import { setRecipe } from '../Redux/Recipes/recipe.actions'
@@ -12,6 +12,7 @@ const Recipe = ({ match, recipes, setRecipe, setParameters, parameters , user, h
 
 	//Getting params from url
 	// let matchParmeters = window.location.pathname.substring(8);
+	// or
 	let recipeParameters = Number((match.params.id).replace(":", ""))
 
 
@@ -29,42 +30,15 @@ const Recipe = ({ match, recipes, setRecipe, setParameters, parameters , user, h
 
 	let favourites = fetchedRecipe.recipe
 
-	const addFavouriteRecipe = () => {
-        const db = firestore;
-
-        const userRef = db.collection("users").doc(user.id);
-        console.log(userRef)
-        console.log(favourites)
-
-        if (userRef) {
-            return userRef.update({
-                "favouriteRecipes" : firestore2.FieldValue.arrayUnion(favourites)
-            })
-                .then(function () {
-                    console.log("Document successfully written!");
-                    console.log(userRef)
-                })
-                .catch(function (error) {
-                    console.error("Error writing document: ", error);
-                });
-
-        } else {
-            console.log(favourites)
-        }
-
-    };
-
-
 
 	let handleSave = async => {
         if (user){
-            addFavouriteRecipe()
-            console.log(favourites)
+            addFavouriteRecipe(favourites, user.id )
              Toastify({
                 text: `Added to favourites🎉`,
                 backgroundColor: "linear-gradient(to right, #f44336, #ed3f32, #e73b2d, #e03629, #da3225)",
                 className: "success",
-                duration: 7000,
+                duration: 4000,
                 newWindow: true,
                 close: true,
                 gravity: "bottom", // `top` or `bottom`
@@ -72,12 +46,12 @@ const Recipe = ({ match, recipes, setRecipe, setParameters, parameters , user, h
                 stopOnFocus: true,
               }).showToast()
 
-
         }else{
             history.push("/login")
         }
-
 	}
+
+
 
 
 	return (
@@ -199,107 +173,8 @@ const Recipe = ({ match, recipes, setRecipe, setParameters, parameters , user, h
 
 							</div>
 						</div>
-
-						{/* <div class="margin-bottom-80px box-shadow">
-							<div class="padding-30px background-white">
-								<h3><i class="far fa-star margin-right-10px text-main-color"></i> Add Review </h3>
-								<hr />
-								<form>
-									<div class="form-row">
-										<div class="form-group col-md-6">
-											<label for="inputName">Full Name</label>
-											<input type="text" class="form-control" id="inputName" placeholder="Name" />
-										</div>
-										<div class="form-group col-md-6">
-											<label for="inputEmail4">Email</label>
-											<input type="email" class="form-control" id="inputEmail4" placeholder="Email" />
-										</div>
-									</div>
-									<div class="form-group">
-										<label for="exampleFormControlTextarea1">Comment :</label>
-										<textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Comment"></textarea>
-									</div>
-									<a href="/" class="btn-sm btn-lg btn-block background-main-color text-white text-center font-weight-bold text-uppercase border-radius-10 padding-10px">Add Now !</a>
-								</form>
-							</div>
-						</div> */}
-
-
-
 					</div>
-{/* 
-					<div class="col-lg-4">
-						<div class="listing-search box-shadow background-main-color padding-30px margin-bottom-30px">
-							<form class="row no-gutters">
-								<div class="col-md-12">
-									<div class="keywords">
-										<input class="listing-form first border-radius-10 margin-bottom-10px" type="text" placeholder="Keywords..." value="" />
-									</div>
-								</div>
-								<div class="col-md-12">
-									<div class="categories dropdown">
-										<span class="listing-form d-block text-nowrap border-radius-10 margin-bottom-10px" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">All Categories</span>
-										<div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-											<button class="dropdown-item text-up-small" type="button">Fish</button>
-											<button class="dropdown-item text-up-small" type="button">Cocktails</button>
-											<button class="dropdown-item text-up-small" type="button">Salads</button>
-											<button class="dropdown-item text-up-small" type="button">Asian</button>
-											<button class="dropdown-item text-up-small" type="button">Fish</button>
-											<button class="dropdown-item text-up-small" type="button">Cocktails</button>
-											<button class="dropdown-item text-up-small" type="button">Salads</button>
-											<button class="dropdown-item text-up-small" type="button">Asian</button>
-										</div>
-									</div>
-								</div>
-								<div class="col-md-12">
-									<a class="listing-bottom border-radius-10 background-second-color box-shadow" href="/">Search Now</a>
-								</div>
-							</form>
-						</div>
 
-						<div class="row margin-tb-45px">
-							<div class="col-6 margin-bottom-25px">
-								<a href="/" class="d-block box-shadow background-main-color text-white hvr-float">
-									<div class="thum"><img src="http://placehold.it/450x250" alt="" /></div>
-									<h4 class="text-center padding-15px">Fish</h4>
-								</a>
-							</div>
-							<div class="col-6 margin-bottom-25px">
-								<a href="/" class="d-block box-shadow background-main-color text-white hvr-float">
-									<div class="thum"><img src="http://placehold.it/450x250" alt="" /></div>
-									<h4 class="text-center padding-15px">Cocktails</h4>
-								</a>
-							</div>
-							<div class="col-6 margin-bottom-25px">
-								<a href="/" class="d-block box-shadow background-main-color text-white hvr-float">
-									<div class="thum"><img src="http://placehold.it/450x250" alt="" /></div>
-									<h4 class="text-center padding-15px">Eggs</h4>
-								</a>
-							</div>
-							<div class="col-6 margin-bottom-25px">
-								<a href="/" class="d-block box-shadow background-main-color text-white hvr-float">
-									<div class="thum"><img src="http://placehold.it/450x250" alt="" /></div>
-									<h4 class="text-center padding-15px">Salads</h4>
-								</a>
-							</div>
-						</div>
-
-						<div class="widget widget_categories">
-							<div class="margin-bottom-30px">
-								<div class="padding-30px background-white border-radius-10">
-									<h4><i class="fab fa-instagram margin-right-10px text-main-color"></i> Instagram</h4>
-									<hr />
-									<div class="row">
-										<div class="col-6 margin-bottom-20px"><a href="/"><img class="border-radius-10" src="http://placehold.it/600x600" alt="" /></a></div>
-										<div class="col-6 margin-bottom-20px"><a href="/"><img class="border-radius-10" src="http://placehold.it/600x600" alt="" /></a></div>
-										<div class="col-6 margin-bottom-20px"><a href="/"><img class="border-radius-10" src="http://placehold.it/600x600" alt="" /></a></div>
-										<div class="col-6 margin-bottom-20px"><a href="/"><img class="border-radius-10" src="http://placehold.it/600x600" alt="" /></a></div>
-									</div>
-								</div>
-							</div>
-						</div>
-
-					</div> */}
 
 				</div>
 			</div>

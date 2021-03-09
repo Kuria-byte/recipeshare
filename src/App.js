@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Switch, Route } from "react-router-dom";
-import { auth, createUserProfileDocument } from "./Firebase/firebase.utils"
+import { auth, createUserProfileDocument , firestore} from "./Firebase/firebase.utils"
 // components & Pages
 import SignIn from "./pages/SignIn";
 import HomePage from "./pages/HomePage";
@@ -12,6 +12,7 @@ import SignUp from "./pages/SignUp";
 
 //Redux
 import { setCurrentUser } from './Redux/User/user.actions'
+import {fetchUserRecipes } from './Redux/Recipes/recipe.actions'
 
 // Libraries and styling
 import './assets/css/animate.css'
@@ -25,12 +26,14 @@ import './assets/css/colors/main.css'
 import './assets/css/elegant_icon.css'
 import './assets/css/fontawesome-all.min.css'
 import Header from './components/Header';
+import UserRecipes from './pages/UserRecipes';
 
 
 
 class App extends Component {
 
   unsubscribeFromAuth = null;
+ 
 
   componentDidMount() {
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
@@ -51,6 +54,16 @@ class App extends Component {
       }
 
     });
+
+// Fetching All User Recipes
+    const db = firestore;
+   
+    const recipeRef = db.collection("recipes").doc("UNcXO3PbVZIsE42CDX8J");
+    recipeRef.onSnapshot ( snapShot =>{
+      this.props.dispatch(fetchUserRecipes([snapShot.data()]) )
+      console.log(snapShot.data())
+    })
+
   }
 
   componentWillUnmount() {
@@ -73,7 +86,9 @@ class App extends Component {
           <Route path="/signup" render={(props) => <SignUp  {...props} />} />
           <Route exact path="/addrecipe" component={AddRecipe} />
           <Route path="/recipe/:id" render={(props) => <Recipe {...props} />} />
-          <Route path="/favourites" render={(props) => <FavouriteRecipes {...props} />} />
+          <Route path="/favourites" render={(props) => <FavouriteRecipes user={this.props.user} {...props} />} />
+          <Route path="/recipes" render={(props) => <UserRecipes user={this.props.user} userRecipes={this.props.userRecipes}{...props} />} />
+       
          
 
         </Switch>
@@ -87,6 +102,7 @@ class App extends Component {
 
 const mapStateToProps = (state) => ({
   user: state.user.currentUser,
+  userRecipes: state.recipes.userRecipes
 
 })
 

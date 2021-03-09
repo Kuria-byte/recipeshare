@@ -15,3 +15,10 @@ export const addFavourites = (recipe) => ({
 
 });
 
+export const fetchUserRecipes = (userRecipes) => ({
+    type :'FETCH_USER_RECIPES',
+    payload : userRecipes
+
+});
+
+

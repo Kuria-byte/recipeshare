@@ -1,5 +1,5 @@
 import React from 'react'
-import { firestore,firestore2 } from '../Firebase/firebase.utils'
+import { addFavouriteRecipe} from '../Firebase/firebase.utils'
 import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 import Toastify from 'toastify-js'
@@ -13,36 +13,10 @@ const RecipeItem = ({ recipe, match, history, index,user }) => {
 
     let favourites = recipe.recipe
 
-    const addFavouriteRecipe = () => {
-        const db = firestore;
-
-        const userRef = db.collection("users").doc(user.id);
-        console.log(userRef)
-        console.log(favourites)
-
-        if (userRef) {
-            return userRef.update({
-                "favouriteRecipes" : firestore2.FieldValue.arrayUnion(favourites)
-            })
-                .then(function () {
-                    console.log("Document successfully written!");
-                    console.log(userRef)
-                })
-                .catch(function (error) {
-                    console.error("Error writing document: ", error);
-                });
-
-        } else {
-            console.log(favourites)
-        }
-
-
-
-    };
 
     let handleSave = async => {
         if (user){
-            addFavouriteRecipe()
+            addFavouriteRecipe(favourites, user.id)
             console.log(favourites)
              Toastify({
                 text: `Added to favourites🎉`,

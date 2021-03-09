@@ -34,7 +34,7 @@ export const createUserProfileDocument = async (userAuth) => {
         createdAt,
         favouriteRecipes: [],
       });
-     
+
 
     } catch (error) {
       console.log("error creating user", error.message);
@@ -42,6 +42,85 @@ export const createUserProfileDocument = async (userAuth) => {
   }
   console.log(userRef);
   return userRef;
+
+};
+
+export const addFavouriteRecipe = async (favourites, userID) => {
+  const db = firestore;
+
+  const userRef = db.collection("users").doc(userID);
+ 
+  if (userRef) {
+    return userRef.update({
+      "favouriteRecipes": firestore2.FieldValue.arrayUnion(favourites)
+    })
+      .then(function () {
+        console.log("Document successfully written!");
+        console.log(userRef)
+      })
+      .catch(function (error) {
+        console.error("Error writing document: ", error);
+      });
+
+  } else {
+    console.log(favourites)
+  }
+
+};
+
+export const addRecipe = (recipeName, category, keyWords, description, image, link, userName, ratings) => {
+  const db = firestore;
+
+    const recipeRef = db.collection("recipes").doc("UNcXO3PbVZIsE42CDX8J");
+    const createdAt = new Date();
+ 
+  if (recipeRef) {
+    return recipeRef.update({
+      "UsersRecipes": firestore2.FieldValue.arrayUnion({
+        name: recipeName,
+        category: category,
+        key: keyWords,
+        description: description,
+        image: image,
+        link: link,
+        userName: userName,
+        ratings: [],
+        createdAt,
+      })
+    })
+      .then(function () {
+        console.log("Document successfully written!");
+        console.log(recipeRef)
+      })
+      .catch(function (error) {
+        console.error("Error writing document: ", error);
+      });
+
+  } else {
+    console.log(recipeRef)
+  }
+
+};
+
+export const deleteFavourite = async (recipe, userID) => {
+  const db = firestore;
+
+  const userRef = db.collection("users").doc(userID);
+
+  if (userRef) {
+    return userRef.update({
+      "favouriteRecipes": firestore2.FieldValue.arrayRemove(recipe)
+    })
+      .then(function () {
+        console.log("Document successfully deleted!");
+      })
+      .catch(function (error) {
+        console.error("Error deleting document: ", error);
+      });
+
+  } else {
+    console.log(recipe)
+  }
 
 };
 

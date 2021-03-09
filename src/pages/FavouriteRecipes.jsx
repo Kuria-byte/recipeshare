@@ -1,8 +1,8 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import { v4 as uuid } from 'uuid'
 import Favourites from '../components/Favourites'
 import Footer from '../components/Footer'
+
 
 
 
@@ -13,6 +13,7 @@ const FavouriteRecipes = ({ user }) => {
 
 	if (user) {
 		recipes = user.favouriteRecipes
+		console.log(recipes)
 
 		if (recipes) {
 			recipes.map((recipe) => fetchedFavourites = recipe)
@@ -20,14 +21,7 @@ const FavouriteRecipes = ({ user }) => {
 			
 		}
 
-
-
 	}
-
-
-
-
-
 
 
 	return (
@@ -65,8 +59,8 @@ const FavouriteRecipes = ({ user }) => {
 
 			<div class="container margin-bottom-100px">
 
-				{recipes !== [] ?
-					recipes.map((recipe, index) => <Favourites key={uuid()} recipe={recipe} index={index} />) : <h1> Loading</h1>
+				{recipes !== [] &&
+					recipes.map((recipe, index) => <Favourites key={uuid()} recipe={recipe} user={user} index={index} />) 
 
 				}
 			</div>
@@ -77,9 +71,9 @@ const FavouriteRecipes = ({ user }) => {
 	)
 }
 
-const mapStateToProps = (state) => ({
-	user: state.user.currentUser,
+// const mapStateToProps = (state) => ({
+// 	// user: state.user.currentUser,
 
-})
+// })
 
-export default connect(mapStateToProps)(FavouriteRecipes)
+export default (FavouriteRecipes)
