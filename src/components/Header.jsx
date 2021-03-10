@@ -42,7 +42,7 @@ const Header = ({ user, logOut }) => {
 									<li class="has-dropdown"><a href="/">Home</a>
 
 									</li>
-									<li class="has-dropdown"><a href="/recipes">Recipes</a>
+									<li class="has-dropdown"><a href="/userrecipes">Recipes</a>
 
 									</li>
 

@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import { v4 as uuid } from 'uuid'
 import Toastify from 'toastify-js'
 import { addFavouriteRecipe } from '../Firebase/firebase.utils'
-import { withRouter } from "react-router-dom";
 
 import { setRecipe } from '../Redux/Recipes/recipe.actions'
 import { setParameters } from '../Redux/Search/search.actions'
@@ -24,12 +23,13 @@ const Recipe = ({ match, recipes, setRecipe, setParameters, parameters , user, h
 	let fetchedRecipe = {};
 	if (fetchedRecipe !== {}) {
 		recipes.filter((recipe, index) => index === recipeParameters).map((recipe) => fetchedRecipe = recipe)
+		
 	}
+	console.log(fetchedRecipe)
 	let { label, image, source, calories, ingredients, url } = fetchedRecipe.recipe;
 	let servings = fetchedRecipe.recipe.yield
 
 	let favourites = fetchedRecipe.recipe
-
 
 	let handleSave = async => {
         if (user){
@@ -192,4 +192,4 @@ const mapDispatchToProps = dispatch => ({
 	setParameters: (parameters) => dispatch(setParameters(parameters))
 })
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Recipe))
+export default connect(mapStateToProps, mapDispatchToProps)(Recipe)

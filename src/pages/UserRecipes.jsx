@@ -17,9 +17,6 @@ const UserRecipes = ({ user, userRecipes , history}) => {
         if (recipesObject) {
             recipeArray = UsersRecipes
         }
-    }else{
-        history.push("/login")
-
     }
 
 

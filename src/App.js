@@ -27,6 +27,7 @@ import './assets/css/elegant_icon.css'
 import './assets/css/fontawesome-all.min.css'
 import Header from './components/Header';
 import UserRecipes from './pages/UserRecipes';
+import IndividualUserRecipe from './pages/IndividualUserRecipe';
 
 
 
@@ -87,9 +88,9 @@ class App extends Component {
           <Route exact path="/addrecipe" component={AddRecipe} />
           <Route path="/recipe/:id" render={(props) => <Recipe {...props} />} />
           <Route path="/favourites" render={(props) => <FavouriteRecipes user={this.props.user} {...props} />} />
-          <Route path="/recipes" render={(props) => <UserRecipes user={this.props.user} userRecipes={this.props.userRecipes}{...props} />} />
-       
-         
+          <Route path="/userrecipes" render={(props) => <UserRecipes user={this.props.user} userRecipes={this.props.userRecipes}{...props} />} />
+          <Route path="/userrecipe/:id" render={(props) => <IndividualUserRecipe user={this.props.user} userRecipes={this.props.userRecipes}{...props} />} />
+
 
         </Switch>
       </div>
